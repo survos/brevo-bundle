@@ -1,0 +1,13 @@
+{% extends '@SurvosBrevo/_layout.html.twig' %}
+
+{% block brevo_content %}
+    <div class="card"><div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Company</dt><dd class="col-sm-9">{{ account.companyName }}</dd>
+            <dt class="col-sm-3">Login</dt><dd class="col-sm-9">{{ account.email }}</dd>
+            {% for plan in account.plan %}
+                <dt class="col-sm-3">Plan ({{ plan.type }})</dt><dd class="col-sm-9">{{ plan.credits }} {{ plan.creditsType }}</dd>
+            {% endfor %}
+        </dl>
+    </div></div>
+{% endblock %}

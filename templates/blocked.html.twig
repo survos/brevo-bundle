@@ -1,0 +1,17 @@
+{% extends '@SurvosBrevo/_layout.html.twig' %}
+
+{% block brevo_content %}
+    <p class="text-secondary">Addresses Brevo refuses to send transactional mail to. Removing one is done in Brevo, deliberately.</p>
+    <div class="card"><div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead><tr><th>Email</th><th>Reason</th><th>Since</th><th>Sender</th></tr></thead>
+            <tbody>
+            {% for b in blocked %}
+                <tr><td><a href="{{ path('survos_brevo_logs', {email: b.email, days: 90}) }}">{{ b.email }}</a></td><td><span class="badge bg-red-lt">{{ b.reason }}</span></td><td class="text-secondary">{{ b.blockedAt|date('M j, Y') }}</td><td class="text-secondary">{{ b.sender }}</td></tr>
+            {% else %}
+                <tr><td colspan="4" class="text-secondary">Nobody is blocked.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div></div>
+{% endblock %}

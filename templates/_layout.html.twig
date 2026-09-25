@@ -1,0 +1,15 @@
+{% extends base_template %}
+
+{% block title %}Brevo · {{ page|capitalize }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center mb-3">
+        <h2 class="mb-0 me-auto">Brevo · {{ page|capitalize }}</h2>
+        {% block brevo_link %}<a class="btn btn-outline-secondary btn-sm" href="https://app.brevo.com/" target="_blank" rel="noopener">Open Brevo</a>{% endblock %}
+    </div>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        {% block brevo_content %}{% endblock %}
+    {% endif %}
+{% endblock %}

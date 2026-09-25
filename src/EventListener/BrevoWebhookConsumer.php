@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Survos\BrevoBundle\Webhook;
+namespace Survos\BrevoBundle\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Survos\BrevoBundle\Event\BrevoMailEvent;

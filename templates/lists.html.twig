@@ -1,0 +1,18 @@
+{% extends '@SurvosBrevo/_layout.html.twig' %}
+
+{% block brevo_link %}<a class="btn btn-outline-secondary btn-sm" href="https://app.brevo.com/contact/list-listing" target="_blank" rel="noopener">Edit lists in Brevo</a>{% endblock %}
+
+{% block brevo_content %}
+    <div class="card"><div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead><tr><th>Id</th><th>Name</th><th class="text-end">Subscribers</th><th class="text-end">Blocklisted</th><th>Folder</th></tr></thead>
+            <tbody>
+            {% for l in lists %}
+                <tr><td class="text-secondary">{{ l.id }}</td><td>{{ l.name }}</td><td class="text-end">{{ l.subscribers }}</td><td class="text-end">{{ l.blocklisted }}</td><td class="text-secondary">{{ l.folderId }}</td></tr>
+            {% else %}
+                <tr><td colspan="5" class="text-secondary">No lists.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div></div>
+{% endblock %}

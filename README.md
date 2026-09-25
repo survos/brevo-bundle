@@ -43,8 +43,23 @@ Brevo's blocklist flag.
 | `brevo:status` | account, plan, credits; says clearly when `BREVO_API_KEY` is empty |
 | `brevo:lists` | contact lists with subscriber / blocklisted counts |
 | `brevo:campaigns [--status=sent]` | email campaigns |
+| `brevo:events [--email=] [--days=7]` | Brevo's transactional event log: requests, delivered, opened, bounces… |
 | `brevo:blocked` | addresses blocked for transactional mail and why |
 | `brevo:contact:push EMAIL --list=2` | create/update a contact and add it to lists |
+
+Brevo caps page sizes (lists 50, blocked 100, campaigns 100); the service clamps to them,
+because a larger limit is a 400 that the SDK reports only as "API request failed".
+`BrevoService::errorMessage()` recovers Brevo's real message from the exception body.
+
+## Admin pages and navbar
+
+Read-only pages at `/admin/brevo` (Account, Lists, Campaigns, Logs, Blocked), straight from
+the API, with links into Brevo for editing. With `survos/tabler-bundle` installed they appear
+as a **Brevo** dropdown in the admin navbar (`ADMIN_NAVBAR_MENU`), shown only when a key is set
+and the viewer has `admin_role`. Routes load without any import (kit-bundle's
+`HasConfigurableRoutes`); set `routes_enabled: false` to drop both the pages and the dropdown.
+
+The account's event log covers every app that shares the key, not just this one.
 
 ## Webhooks
 
@@ -80,4 +95,8 @@ To require HTTP Basic auth, put `user:password@` in that URL and set
 survos_brevo:
     api_key: '%env(BREVO_API_KEY)%'   # default; empty = not configured
     webhook: true                     # set false to leave /webhook/brevo alone
+    admin_role: ROLE_ADMIN            # pages + navbar dropdown
+    base_template: base.html.twig     # the admin pages extend this; needs a "body" block
+    routes_enabled: true
+    route_prefix: /admin/brevo
 ```

@@ -1,19 +1,30 @@
 {
     "name": "survos/brevo-bundle",
     "description": "Brevo (ex-Sendinblue) for Symfony: the official SDK on Symfony HttpClient, list/campaign commands, and webhook events re-dispatched for any listener.",
-    "keywords": ["symfony", "brevo", "sendinblue", "email", "newsletter", "webhook"],
+    "keywords": [
+        "symfony",
+        "brevo",
+        "sendinblue",
+        "email",
+        "newsletter",
+        "webhook"
+    ],
     "license": "MIT",
     "type": "symfony-bundle",
     "require": {
         "php": "^8.5",
         "getbrevo/brevo-php": "^5.0",
         "nyholm/psr7": "^1.8",
+        "survos/kit-bundle": "^2.34",
         "symfony/config": "^8.1",
         "symfony/console": "^8.1",
         "symfony/dependency-injection": "^8.1",
         "symfony/event-dispatcher": "^8.1",
+        "symfony/framework-bundle": "^8.1",
         "symfony/http-client": "^8.1",
-        "symfony/http-kernel": "^8.1"
+        "symfony/http-kernel": "^8.1",
+        "symfony/security-core": "^8.1",
+        "twig/twig": "^3.4"
     },
     "require-dev": {
         "phpstan/phpstan": "^2.0",
@@ -21,7 +32,8 @@
     },
     "suggest": {
         "symfony/brevo-mailer": "Send mail with MAILER_DSN=brevo+api://KEY@default, and parse Brevo webhooks.",
-        "symfony/webhook": "Receive Brevo webhooks at /webhook/brevo; this bundle re-dispatches them as BrevoMailEvent."
+        "symfony/webhook": "Receive Brevo webhooks at /webhook/brevo; this bundle re-dispatches them as BrevoMailEvent.",
+        "survos/tabler-bundle": "Adds a \"Brevo\" dropdown (Account, Lists, Campaigns, Logs, Blocked) to the admin navbar."
     },
     "autoload": {
         "psr-4": {

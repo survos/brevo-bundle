@@ -1,0 +1,34 @@
+{% extends '@SurvosBrevo/_layout.html.twig' %}
+
+{% block brevo_link %}<a class="btn btn-outline-secondary btn-sm" href="https://app.brevo.com/email/logs" target="_blank" rel="noopener">Logs in Brevo</a>{% endblock %}
+
+{% block brevo_content %}
+    <form class="row g-2 mb-3" method="get">
+        <div class="col-auto"><input class="form-control form-control-sm" type="email" name="email" value="{{ email }}" placeholder="any address"></div>
+        <div class="col-auto">
+            <select class="form-select form-select-sm" name="days">
+                {% for d in [1, 7, 30, 90] %}<option value="{{ d }}" {{ d == days ? 'selected' }}>last {{ d }} day{{ d > 1 ? 's' }}</option>{% endfor %}
+            </select>
+        </div>
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Filter</button></div>
+    </form>
+    <div class="card"><div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead><tr><th>When</th><th>Email</th><th>Event</th><th>Subject</th><th>Reason</th></tr></thead>
+            <tbody>
+            {% for e in events %}
+                {% set bad = e.event in ['hardBounces', 'softBounces', 'spam', 'blocked', 'invalid', 'error', 'unsubscribed'] %}
+                <tr>
+                    <td class="text-secondary text-nowrap">{{ e.date|date('M j, g:ia') }}</td>
+                    <td><a href="{{ path('survos_brevo_logs', {email: e.email, days: days}) }}">{{ e.email }}</a></td>
+                    <td><span class="badge {{ bad ? 'bg-red-lt' : 'bg-blue-lt' }}">{{ e.event }}</span></td>
+                    <td>{{ e.subject }}</td>
+                    <td class="text-secondary">{{ e.reason }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="text-secondary">No events in the last {{ days }} day{{ days > 1 ? 's' }}.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div></div>
+{% endblock %}

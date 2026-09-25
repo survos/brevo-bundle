@@ -1,0 +1,23 @@
+{% extends '@SurvosBrevo/_layout.html.twig' %}
+
+{% block brevo_link %}<a class="btn btn-outline-secondary btn-sm" href="https://app.brevo.com/marketing-campaign/list" target="_blank" rel="noopener">Compose in Brevo</a>{% endblock %}
+
+{% block brevo_content %}
+    <div class="mb-2">
+        {% for s in [null, 'draft', 'queued', 'sent', 'suspended', 'archive'] %}
+            <a class="btn btn-sm {{ s == status ? 'btn-primary' : 'btn-ghost-secondary' }}" href="{{ path('survos_brevo_campaigns', s ? {status: s} : {}) }}">{{ s ?? 'all' }}</a>
+        {% endfor %}
+    </div>
+    <div class="card"><div class="table-responsive">
+        <table class="table table-vcenter card-table">
+            <thead><tr><th>Id</th><th>Name</th><th>Subject</th><th>Status</th><th>Created</th></tr></thead>
+            <tbody>
+            {% for c in campaigns %}
+                <tr><td class="text-secondary">{{ c.id }}</td><td>{{ c.name }}</td><td>{{ c.subject }}</td><td><span class="badge bg-blue-lt">{{ c.status }}</span></td><td class="text-secondary">{{ c.createdAt|date('M j, Y') }}</td></tr>
+            {% else %}
+                <tr><td colspan="5" class="text-secondary">No campaigns{{ status ? ' with status ' ~ status }}.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div></div>
+{% endblock %}
