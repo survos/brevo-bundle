@@ -38,7 +38,7 @@ final class BrevoMailEvent
     public bool $isSuppression {
         get => match (true) {
             $this->remoteEvent instanceof MailerEngagementEvent => \in_array($this->name, [MailerEngagementEvent::UNSUBSCRIBE, MailerEngagementEvent::SPAM], true),
-            $this->remoteEvent instanceof MailerDeliveryEvent => $this->name === MailerDeliveryEvent::BOUNCE
+            $this->remoteEvent instanceof MailerDeliveryEvent => MailerDeliveryEvent::BOUNCE === $this->name
                 && ($this->remoteEvent->getPayload()['event'] ?? null) === 'hard_bounce',
             default => false,
         };

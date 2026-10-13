@@ -46,7 +46,7 @@ final class BrevoService
 
     public function isConfigured(): bool
     {
-        return $this->apiKey !== '';
+        return '' !== $this->apiKey;
     }
 
     public function sdk(): Brevo
@@ -75,7 +75,7 @@ final class BrevoService
             'status' => $status,
             'limit' => min($limit, 100),
             'excludeHtmlContent' => true,
-        ], static fn ($v) => $v !== null)));
+        ], static fn ($v) => null !== $v)));
 
         return array_map(static fn ($campaign) => [
             'id' => $campaign->id,
@@ -100,7 +100,7 @@ final class BrevoService
             'listIds' => $listIds ?: null,
             'attributes' => $attributes ?: null,
             'updateEnabled' => true,
-        ], static fn ($v) => $v !== null)));
+        ], static fn ($v) => null !== $v)));
     }
 
     /** @param list<int> $listIds */
@@ -136,7 +136,7 @@ final class BrevoService
             'days' => $days,
             'limit' => min($limit, 5000),
             'sort' => 'desc',
-        ], static fn ($v) => $v !== null)));
+        ], static fn ($v) => null !== $v)));
 
         return array_map(static fn ($e) => [
             'date' => $e->date,
@@ -223,7 +223,7 @@ final class BrevoService
         #[Option('Brevo list id (repeatable)')] array $list = [],
     ): int {
         $this->upsertContact($email, array_map(intval(...), $list));
-        $io->success(sprintf('%s pushed%s', $email, $list ? ' to list(s) ' . implode(', ', $list) : ''));
+        $io->success(sprintf('%s pushed%s', $email, $list ? ' to list(s) '.implode(', ', $list) : ''));
 
         return Command::SUCCESS;
     }
