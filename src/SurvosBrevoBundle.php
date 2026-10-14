@@ -11,7 +11,7 @@ use Survos\BrevoBundle\Menu\BrevoMenuSubscriber;
 use Survos\BrevoBundle\Service\BrevoClientFactory;
 use Survos\Kit\AbstractSurvosBundle;
 use Survos\Kit\Traits\HasConfigurableRoutes;
-use Survos\TablerBundle\Event\MenuEvent;
+use Survos\TablerBundle\Menu\MenuBuilderTrait;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -110,7 +110,7 @@ final class SurvosBrevoBundle extends AbstractSurvosBundle
         }
 
         // The dropdown links to the admin routes, so it only exists when they do.
-        if ($config['routes_enabled'] && class_exists(MenuEvent::class)) {
+        if ($config['routes_enabled'] && trait_exists(MenuBuilderTrait::class)) {
             $services->set(BrevoMenuSubscriber::class);
         }
     }
